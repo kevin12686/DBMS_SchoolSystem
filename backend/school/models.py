@@ -53,6 +53,9 @@ class Course(models.Model):
                                      related_name='learn',
                                      verbose_name='學生')
 
+    def student_number(self):
+        return self.student.all().count()
+
     def __str__(self):
         return '{} (講師: {})'.format(self.name, self.instructor.name)
 
