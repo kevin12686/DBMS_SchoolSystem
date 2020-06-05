@@ -1,0 +1,35 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <div class="row mb-4">
+        <div class="col">
+            <h2>校外人士表單</h2>
+        </div>
+        <div class="col">
+            <div class="d-flex flex-row-reverse">
+                <div class="p-2">
+                    <a href="{% url 'OutSchoolPeopleList' %}">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-sign-out-alt"></i> 返回列表
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}">{{ form.name.label_tag }}</label>
+                <input type="text" class="form-control" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" value="{{ form.name.value|default_if_none:'' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.age.id_for_label }}">{{ form.age.label_tag }}</label>
+                <input type="number" class="form-control" name="{{ form.age.name }}" id="{{ form.age.id_for_label }}" value="{{ form.age.value|default_if_none:'' }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">送出</button>
+        </form>
+    </div>
+{% endblock %}

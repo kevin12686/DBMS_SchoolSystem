@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DBMS School System</title>
+    <link rel="stylesheet" href="{% static "bootstrap-4.0.0-dist/theme/darkly.min.css" %}">
+    <link rel="stylesheet" href="{% static "fontawesome-free-5.13.0-web/css/all.min.css" %}">
+    <script src="{% static "jquery-3.5.1.min.js" %}"></script>
+    <script src="{% static "bootstrap-4.0.0-dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "fontawesome-free-5.13.0-web/js/all.min.js" %}"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">School System</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    People
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'InSchoolPeopleList' %}">In School</a>
+                    <a class="dropdown-item" href="{% url 'OutSchoolPeopleList' %}">Out School</a>
+                </div>
+            </div>
+            <a class="nav-item nav-link active" href="{% url 'CourseList' %}">Course</a>
+            <a class="nav-item nav-link active" href="#">Award</a>
+            <a class="nav-item nav-link active" href="#">Section</a>
+            <a class="nav-item nav-link active" href="#">SQL Query</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid p-5">
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+
+</body>
+</html>
