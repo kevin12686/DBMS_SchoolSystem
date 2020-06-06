@@ -1,6 +1,6 @@
 from django.db.models import Max, Min, Avg
 from django.urls import reverse
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import InSchoolPeople, OutSchoolPeople, Course, Award, Section
 
 
@@ -41,6 +41,14 @@ class InSchoolPeopleUpdate(UpdateView):
         return reverse('InSchoolPeopleList')
 
 
+class InSchoolPeopleDelete(DeleteView):
+    model = InSchoolPeople
+    template_name = 'deleteConfirm.html'
+
+    def get_success_url(self):
+        return reverse('InSchoolPeopleList')
+
+
 class OutSchoolPeopleList(ListView):
     model = OutSchoolPeople
     template_name = 'outpeopleList.html'
@@ -59,6 +67,14 @@ class OutSchoolPeopleUpdate(UpdateView):
     model = OutSchoolPeople
     template_name = 'outpeopleForm.html'
     fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('OutSchoolPeopleList')
+
+
+class OutSchoolPeopleDelete(DeleteView):
+    model = OutSchoolPeople
+    template_name = 'deleteConfirm.html'
 
     def get_success_url(self):
         return reverse('OutSchoolPeopleList')
@@ -85,3 +101,73 @@ class CourseUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse('CourseList')
+
+
+class CourseDelete(DeleteView):
+    model = Course
+    template_name = 'deleteConfirm.html'
+
+    def get_success_url(self):
+        return reverse('CourseList')
+
+
+class AwardList(ListView):
+    model = Award
+    template_name = 'awardList.html'
+
+
+class AwardCreate(CreateView):
+    model = Award
+    template_name = 'awardForm.html'
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('AwardList')
+
+
+class AwardUpdate(UpdateView):
+    model = Award
+    template_name = 'awardForm.html'
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('AwardList')
+
+
+class AwardDelete(DeleteView):
+    model = Award
+    template_name = 'deleteConfirm.html'
+
+    def get_success_url(self):
+        return reverse('AwardList')
+
+
+class SectionList(ListView):
+    model = Section
+    template_name = 'sectionList.html'
+
+
+class SectionCreate(CreateView):
+    model = Section
+    template_name = 'sectionForm.html'
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('SectionList')
+
+
+class SectionUpdate(UpdateView):
+    model = Section
+    template_name = 'sectionForm.html'
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('SectionList')
+
+
+class SectionDelete(DeleteView):
+    model = Section
+    template_name = 'deleteConfirm.html'
+
+    def get_success_url(self):
+        return reverse('SectionList')

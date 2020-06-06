@@ -4,14 +4,14 @@
 
     <div class="row mb-4">
         <div class="col">
-            <h2>課程</h2>
+            <h2>課堂</h2>
         </div>
         <div class="col">
             <div class="d-flex flex-row-reverse">
                 <div class="p-2">
-                    <a href="{% url 'CourseCreate' %}">
+                    <a href="{% url 'SectionCreate' %}">
                         <button class="btn btn-primary">
-                            <i class="fas fa-book"></i> 新增課程
+                            <i class="fas fa-file"></i> 新增課堂
                         </button>
                     </a>
                 </div>
@@ -23,9 +23,9 @@
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">名稱</th>
-            <th scope="col">學分</th>
-            <th scope="col">學生人數</th>
+            <th scope="col">課程</th>
+            <th scope="col">日期</th>
+            <th scope="col">備註</th>
             <th scope="col">功能</th>
         </tr>
         </thead>
@@ -33,14 +33,14 @@
         {% for object in object_list %}
             <tr>
                 <th scope="row">{{ object.id }}</th>
-                <td>{{ object.name }}</td>
-                <td>{{ object.credit }}</td>
-                <td>{{ object.student_number }}</td>
+                <td>{{ object.course.name }}</td>
+                <td>{{ object.date }}</td>
+                <td>{{ object.memo|truncatewords:10 }}</td>
                 <td>
-                    <a href="{% url 'CourseUpdate' object.pk %}">
+                    <a href="{% url 'SectionUpdate' object.pk %}">
                         <button class="btn btn-warning mx-1"><i class="fas fa-edit"></i></button>
                     </a>
-                    <a href="{% url 'CourseDelete' object.pk %}">
+                    <a href="{% url 'SectionDelete' object.pk %}">
                         <button class="btn btn-danger mx-1"><i class="fas fa-trash-alt"></i></button>
                     </a>
                 </td>

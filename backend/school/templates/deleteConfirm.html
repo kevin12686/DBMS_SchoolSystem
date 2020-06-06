@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <div class="text-center">
+        <h2>確認刪除</h2>
+
+        <div class="p-5">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-danger">確認</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
