@@ -1,0 +1,66 @@
+{% extends '_base.html' %}
+
+{% block content %}
+
+    <div class="mb-4">
+        <h2>
+            SQL Query
+            <a class="btn btn-lg btn-light mx-2" data-toggle="collapse" href="#table_info" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <i class="fas fa-caret-square-down fa-2x"></i>
+            </a>
+        </h2>
+    </div>
+
+    <div class="text-center mx-auto" style="width: 90vw;">
+
+        <div class="collapse" id="table_info">
+            <div class="d-flex flex-row mx-auto">
+                {% for table, fields in models.items %}
+                    <div class="card m-2" style="width: 18rem;">
+                        <div class="card-body">
+                            <h4 class="card-title text-info">{{ table }}</h4>
+                            <ul class="list-group list-group-flush">
+                                {% for field in fields %}
+                                    <li class="list-group-item">{{ field }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="my-5">
+        <form class="form-inline my-2 my-lg-0 mx-auto" style="width: 800px;" method="POST">
+            {% csrf_token %}
+            <input class="form-control" type="search" name="query" value="{{ query|default_if_none:'' }}" placeholder="Query" aria-label="Query" style="width: 745px; margin-right: 5px;">
+            <button class="btn btn-success text-center" type="submit" style="width: 50px;"><i class="fas fa-play-circle"></i></button>
+        </form>
+        {% if query %}
+            <div class="mt-3 mx-auto" style="width: 90vw;">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        {% for field in fields %}
+                            <th scope="col">{{ field }}</th>
+                        {% endfor %}
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for result in results %}
+                        <tr>
+                            {% for data in result %}
+                                <td>{{ data }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

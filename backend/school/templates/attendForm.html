@@ -1,0 +1,51 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <div class="row mb-4">
+        <div class="col">
+            <h2>出席表單</h2>
+        </div>
+        <div class="col">
+            <div class="d-flex flex-row-reverse">
+                <div class="p-2">
+                    <a href="{% url 'AttendList' %}">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-sign-out-alt"></i> 返回列表
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.section.id_for_label }}">{{ form.section.label_tag }}</label>
+                <select class="form-control" name="{{ form.section.name }}" id="{{ form.section.id_for_label }}" required>
+                    {% for option in form.section %}
+                        {{ option }}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.inSchool.id_for_label }}">{{ form.inSchool.label_tag }}</label>
+                <select multiple class="form-control" name="{{ form.inSchool.name }}" id="{{ form.inSchool.id_for_label }}" size="10">
+                    {% for option in form.inSchool %}
+                        {{ option }}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.outSchool.id_for_label }}">{{ form.outSchool.label_tag }}</label>
+                <select multiple class="form-control" name="{{ form.outSchool.name }}" id="{{ form.outSchool.id_for_label }}" size="10">
+                    {% for option in form.outSchool %}
+                        {{ option }}
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">送出</button>
+        </form>
+    </div>
+{% endblock %}

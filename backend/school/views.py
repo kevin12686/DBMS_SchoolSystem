@@ -1,7 +1,9 @@
+from django.db import connection
 from django.db.models import Max, Min, Avg
+from django.apps import apps
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
-from .models import InSchoolPeople, OutSchoolPeople, Course, Award, Section
+from .models import InSchoolPeople, OutSchoolPeople, Course, Award, Section, SectionAttending
 
 
 # Create your views here.
@@ -17,9 +19,9 @@ class InSchoolPeopleList(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['student_list'] = self.model.objects.exclude(learn=None)
-        context['max_cradit'] = context['student_list'].aggregate(Max('learn__credit'))['learn__credit__max']
-        context['min_cradit'] = context['student_list'].aggregate(Min('learn__credit'))['learn__credit__min']
-        context['avg_cradit'] = context['student_list'].aggregate(Avg('learn__credit'))['learn__credit__avg']
+        context['max_height'] = context['student_list'].aggregate(Max('height'))['height__max']
+        context['min_height'] = context['student_list'].aggregate(Min('height'))['height__min']
+        context['avg_height'] = context['student_list'].aggregate(Avg('height'))['height__avg']
         return context
 
 
@@ -171,3 +173,61 @@ class SectionDelete(DeleteView):
 
     def get_success_url(self):
         return reverse('SectionList')
+
+
+class SectionAttendingList(ListView):
+    model = SectionAttending
+    template_name = 'attendList.html'
+
+
+class SectionAttendingCreate(CreateView):
+    model = SectionAttending
+    template_name = 'attendForm.html'
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('AttendList')
+
+
+class SectionAttendingUpdate(UpdateView):
+    model = SectionAttending
+    template_name = 'attendForm.html'
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('AttendList')
+
+
+class SectionAttendingDelete(DeleteView):
+    model = SectionAttending
+    template_name = 'deleteConfirm.html'
+
+    def get_success_url(self):
+        return reverse('AttendList')
+
+
+class SQLQuery(TemplateView):
+    template_name = 'sqlQuery.html'
+
+    def post(self, request, *args, **kwargs):
+        query = request.POST.get('query', '')
+        context = self.get_context_data(**kwargs)
+        context['query'] = query
+        try:
+            cursor = connection.cursor()
+            cursor.execute(query)
+            context['fields'] = [field[0] for field in cursor.description]
+            context['results'] = cursor.fetchall()
+        except Exception as e:
+            context['fields'] = ['Error']
+            context['results'] = [(str(e),)]
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['models'] = dict()
+        for models in apps.get_app_config('school').get_models():
+            context['models'][models._meta.db_table] = list()
+            for field in models._meta.fields:
+                context['models'][models._meta.db_table].append(field.name)
+        return context

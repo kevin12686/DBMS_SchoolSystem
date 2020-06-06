@@ -98,15 +98,27 @@ class Section(models.Model):
                             verbose_name='備註')
 
     def __str__(self):
-        return '{} (日期: {})}'.format(self.course.name, str(self.date))
+        return '{} (日期: {})'.format(self.course.name, str(self.date))
 
 
 class SectionAttending(models.Model):
+    section = models.ForeignKey(Section,
+                                null=False,
+                                blank=False,
+                                on_delete=models.CASCADE,
+                                related_name='record',
+                                verbose_name='課堂')
     inSchool = models.ManyToManyField(InSchoolPeople,
                                       blank=True,
                                       related_name='attend',
-                                      verbose_name='學生抗課')
+                                      verbose_name='學生上課')
     outSchool = models.ManyToManyField(OutSchoolPeople,
                                        blank=True,
                                        related_name='attend',
                                        verbose_name='校外旁聽')
+
+    def total_in_stu(self):
+        return self.inSchool.all().count()
+
+    def total_out_stu(self):
+        return self.outSchool.all().count()

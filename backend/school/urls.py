@@ -18,7 +18,12 @@ from .views import (InSchoolPeopleList,
                     SectionList,
                     SectionCreate,
                     SectionUpdate,
-                    SectionDelete, )
+                    SectionDelete,
+                    SectionAttendingList,
+                    SectionAttendingCreate,
+                    SectionAttendingUpdate,
+                    SectionAttendingDelete,
+                    SQLQuery, )
 
 urlpatterns = [
     path('', InSchoolPeopleList.as_view(), name='InSchoolPeopleList'),
@@ -42,4 +47,9 @@ urlpatterns = [
     path('section/create/', SectionCreate.as_view(), name='SectionCreate'),
     path('section/update/<pk>/', SectionUpdate.as_view(), name='SectionUpdate'),
     path('section/delete/<pk>/', SectionDelete.as_view(), name='SectionDelete'),
+    path('attend/', SectionAttendingList.as_view(), name='AttendList'),
+    path('attend/create/', SectionAttendingCreate.as_view(), name='AttendCreate'),
+    path('attend/update/<pk>/', SectionAttendingUpdate.as_view(), name='AttendUpdate'),
+    path('attend/delete/<pk>/', SectionAttendingDelete.as_view(), name='AttendDelete'),
+    path('query/', SQLQuery.as_view(), name='SQLQuery'),
 ]
