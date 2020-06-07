@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label for="{{ form.height.id_for_label }}">{{ form.height.label_tag }}</label>
-                <input type="number" class="form-control" name="{{ form.height.name }}" id="{{ form.height.id_for_label }}" value="{{ form.age.value|default_if_none:'' }}"  required>
+                <input type="number" class="form-control" name="{{ form.height.name }}" id="{{ form.height.id_for_label }}" value="{{ form.height.value|default_if_none:'' }}"  required>
             </div>
             <button type="submit" class="btn btn-primary">送出</button>
         </form>

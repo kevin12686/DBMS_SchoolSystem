@@ -18,7 +18,7 @@ class InSchoolPeopleList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['student_list'] = self.model.objects.exclude(learn=None)
+        context['student_list'] = self.model.objects.exclude(name__in=self.object_list.values('name'))
         context['max_height'] = context['student_list'].aggregate(Max('height'))['height__max']
         context['min_height'] = context['student_list'].aggregate(Min('height'))['height__min']
         context['avg_height'] = context['student_list'].aggregate(Avg('height'))['height__avg']

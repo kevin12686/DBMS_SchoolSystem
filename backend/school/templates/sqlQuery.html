@@ -8,6 +8,33 @@
             <a class="btn btn-lg btn-light mx-2" data-toggle="collapse" href="#table_info" role="button" aria-expanded="false" aria-controls="collapseExample">
                 <i class="fas fa-caret-square-down fa-2x"></i>
             </a>
+            <div class="d-flex my-3">
+                <form class="form-inline mr-2" method="POST">
+                    {% csrf_token %}
+                    <input name="query" value="select * from school_inschoolpeople where name in ('Kevin', 'Ian')" hidden>
+                    <button class="btn btn-primary" type="submit">IN</button>
+                </form>
+                <form class="form-inline mr-2" method="POST">
+                    {% csrf_token %}
+                    <input name="query" value="select * from school_inschoolpeople where name not in ('Kevin', 'Ian')" hidden>
+                    <button class="btn btn-primary" type="submit">NOT IN</button>
+                </form>
+                <form class="form-inline mr-2" method="POST">
+                    {% csrf_token %}
+                    <input name="query" value="select * from school_inschoolpeople group by name having height > 170" hidden>
+                    <button class="btn btn-primary" type="submit">HAVING</button>
+                </form>
+                <form class="form-inline mr-2" method="POST">
+                    {% csrf_token %}
+                    <input name="query" value="select id, name from school_inschoolpeople where exists (select instructor_id from school_course where id = instructor_id)" hidden>
+                    <button class="btn btn-primary" type="submit">EXISTS</button>
+                </form>
+                <form class="form-inline mr-2" method="POST">
+                    {% csrf_token %}
+                    <input name="query" value="select id, name from school_inschoolpeople where not exists (select instructor_id from school_course where id = instructor_id)" hidden>
+                    <button class="btn btn-primary" type="submit">NOT EXISTS</button>
+                </form>
+            </div>
         </h2>
     </div>
 
